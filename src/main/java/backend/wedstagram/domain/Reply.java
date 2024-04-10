@@ -28,6 +28,6 @@ public class Reply extends BaseEntity{
 
     private String text;
 
-    @ElementCollection
-    private List<Long> likeList=new ArrayList<>();
+    @OneToMany(mappedBy = "reply",cascade = CascadeType.ALL)
+    private List<ReplyLike> likeList=new ArrayList<>();
 }

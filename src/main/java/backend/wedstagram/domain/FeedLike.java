@@ -6,15 +6,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseEntity{
+public class FeedLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,9 +23,4 @@ public class Comment extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="feed_id")
     private Feed feed;
-
-    private String text;
-
-    @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL)
-    private List<CommentLike> likeList=new ArrayList<>();
 }

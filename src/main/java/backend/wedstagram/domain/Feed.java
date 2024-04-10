@@ -22,9 +22,9 @@ public class Feed extends BaseEntity {
 
     private String imageUrl;
 
-    @ElementCollection
-    private List<String> hashTags = new ArrayList<>();
+    @OneToMany(mappedBy = "feed",cascade = CascadeType.ALL)
+    private List<FeedHashTag> feedHashTagList=new ArrayList<>();
 
-    @ElementCollection
-    private List<Long> likeList=new ArrayList<>();
+    @OneToMany(mappedBy = "feed",cascade = CascadeType.ALL)
+    private List<FeedLike> likeList=new ArrayList<>();
 }

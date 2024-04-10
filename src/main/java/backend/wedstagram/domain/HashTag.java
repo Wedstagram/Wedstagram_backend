@@ -14,21 +14,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseEntity{
+public class HashTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id")
-    private Member member;
+    private String hashTag;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="feed_id")
-    private Feed feed;
-
-    private String text;
-
-    @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL)
-    private List<CommentLike> likeList=new ArrayList<>();
+    @OneToMany(mappedBy = "hashtag",cascade = CascadeType.ALL)
+    private List<FeedHashTag> feedHashTagList=new ArrayList<>();
 }
