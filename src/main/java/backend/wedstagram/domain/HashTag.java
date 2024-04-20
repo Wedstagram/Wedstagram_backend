@@ -21,6 +21,6 @@ public class HashTag {
 
     private String hashTag;
 
-    @OneToMany(mappedBy = "hashtag",cascade = CascadeType.ALL)
-    private List<FeedHashTag> feedHashTagList=new ArrayList<>();
+    //@OneToMany(mappedBy = "hashtag",cascade = CascadeType.ALL)
+    //private List<FeedHashTag> feedHashTagList=new ArrayList<>();
 }
