@@ -22,11 +22,11 @@ public class FollowController {
     private final MemberService memberService;
 
     // 팔로우하기
-    @PostMapping("{userName}/follow")
-    public ResponseEntity<String> followUser(@PathVariable(value = "userName") String userName, @RequestBody String recieveUserName) {
+    @PostMapping("{memberId}/follow")
+    public ResponseEntity<String> followUser(@PathVariable(value = "memberId") Long memberId, @RequestBody Long recieveMemberId) {
 
-        Member follower = memberService.getMemberByUsername(userName);
-        Member Following = memberService.getMemberByUsername(recieveUserName);
+        Member follower = memberService.getMemberById(memberId);
+        Member Following = memberService.getMemberById(recieveMemberId);
 
         Follow follow = FollowConverter.toFollow(follower, Following);
 
@@ -35,19 +35,18 @@ public class FollowController {
     }
 
     // 언팔로우하기
-    @DeleteMapping("{userName}/unfollow")
-    public ResponseEntity<String> unfollowUser(@PathVariable(value = "userName") String userName, @RequestBody String recieveUserName) {
+    @DeleteMapping("{memberId}/unfollow")
+    public ResponseEntity<String> unfollowUser(@PathVariable(value = "memberId") Long memberId, @RequestBody Long recieveMemberId) {
 
-        followService.deleteFollow(userName, recieveUserName);
+        followService.deleteFollow(memberId, recieveMemberId);
         return ResponseEntity.status(HttpStatus.OK).body("언팔로우 완료");
     }
 
     // 내 팔로워 보기
-    @GetMapping("{userName}/followers")
-    public ResponseEntity<FollowResponseDto> getFollowers(@PathVariable(value = "userName") String userName) {
+    @GetMapping("{memberId}/followers")
+    public ResponseEntity<FollowResponseDto> getFollowers(@PathVariable(value = "memberId") Long memberId) {
 
-        Member member = memberService.getMemberByUsername(userName);
-        List<FollowDto> followers = followService.getFollowers(member.getUserName());
+        List<FollowDto> followers = followService.getFollowers(memberId);
 
         FollowResponseDto followResponseDto = FollowResponseDto.builder()
                 .followList(followers)
@@ -57,11 +56,10 @@ public class FollowController {
     }
 
     // 내 팔로잉 보기
-    @GetMapping("{userName}/followings")
-    public ResponseEntity<FollowResponseDto> getFollowings(@PathVariable(value = "userName") String userName) {
+    @GetMapping("{memberId}/followings")
+    public ResponseEntity<FollowResponseDto> getFollowings(@PathVariable(value = "memberId") Long memberId) {
 
-        Member member = memberService.getMemberByUsername(userName);
-        List<FollowDto> followings = followService.getFollowings(member.getUserName());
+        List<FollowDto> followings = followService.getFollowings(memberId);
 
         FollowResponseDto followResponseDto = FollowResponseDto.builder()
                 .followList(followings)
@@ -71,10 +69,10 @@ public class FollowController {
     }
 
     // 팔로워 삭제
-    @DeleteMapping("{userName}/followers")
-    public ResponseEntity<String> deleteFollowers(@PathVariable(value = "userName") String userName, @RequestBody String recieveUserName) {
+    @DeleteMapping("{memberId}/followers")
+    public ResponseEntity<String> deleteFollowers(@PathVariable(value = "memberId") Long memberId, @RequestBody Long recieveMemberId) {
 
-        followService.deleteFollow(recieveUserName, userName);
+        followService.deleteFollow(recieveMemberId, memberId);
         return ResponseEntity.status(HttpStatus.OK).body("팔로워 삭제 완료");
     }
 }

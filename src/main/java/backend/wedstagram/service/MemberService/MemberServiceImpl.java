@@ -16,9 +16,4 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findById(memberId).orElseThrow();
     }
 
-    @Override
-    public Member getMemberByUsername(String username) {
-        return memberRepository.findByUserName(username).orElseThrow();
-    }
-
 }

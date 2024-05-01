@@ -26,18 +26,18 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public void deleteFollow(String followerUserName, String followingUserName) {
-        followRepository.deleteFollowByFollowerAndFollowing(followerUserName, followingUserName);
+    public void deleteFollow(Long followerId, Long followingId) {
+        followRepository.deleteFollowByFollowerIdAndFollowingId(followerId, followingId);
     }
 
     @Override
-    public void findFollowByFollowerAndFollowing(String followerUserName, String followingUserName) {
-        followRepository.findByFollowerAndFollowing(followerUserName, followingUserName);
+    public void findFollowByFollowerAndFollowing(Long followerId, Long followingId) {
+        followRepository.findByFollowerIdAndFollowingId(followerId, followingId);
     }
 
     @Override
-    public List<FollowDto> getFollowers(String userName) {
-        Member member = memberRepository.findByUserName(userName).get();
+    public List<FollowDto> getFollowers(Long memberId) {
+        Member member = memberRepository.findById(memberId).get();
         List<Follow> followers = member.getFollowers();
 
         List<FollowDto> collectFollowDtos = followers.stream().map(Follow::getFollower).map(follower -> FollowDto.builder()
@@ -51,8 +51,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<FollowDto> getFollowings(String userName) {
-        Member member = memberRepository.findByUserName(userName).get();
+    public List<FollowDto> getFollowings(Long memberId) {
+        Member member = memberRepository.findById(memberId).get();
         List<Follow> followings = member.getFollowings();
 
         List<FollowDto> collectFollowDtos = followings.stream().map(Follow::getFollowing).map(following -> FollowDto.builder()
