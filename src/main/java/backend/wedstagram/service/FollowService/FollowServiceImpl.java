@@ -31,6 +31,11 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
+    public void findFollowByFollowerAndFollowing(String followerUserName, String followingUserName) {
+        followRepository.findByFollowerAndFollowing(followerUserName, followingUserName);
+    }
+
+    @Override
     public List<FollowDto> getFollowers(String userName) {
         Member member = memberRepository.findByUserName(userName).get();
         List<Follow> followers = member.getFollowers();
