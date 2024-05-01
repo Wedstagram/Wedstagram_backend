@@ -9,7 +9,6 @@ public interface FollowService {
 
     public void saveFollow(Follow follow);
     public void deleteFollow(String followerUserName, String followingUserName);
-
     public List<FollowDto> getFollowers(String userName);
     public List<FollowDto> getFollowings(String userName);
 
