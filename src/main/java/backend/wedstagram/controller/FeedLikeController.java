@@ -11,18 +11,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/feed/like")
 public class FeedLikeController {
-    private final FeedLikeService feedLikeService;
+
+    //private final FeedLikeService feedLikeService;
 
     @PostMapping
     public ResponseEntity<?> insert(@RequestBody @Valid FeedLikeRequestDto feedLikeRequestDto) {
-        feedLikeService.insert(feedLikeRequestDto);
+        //feedLikeService.insert(feedLikeRequestDto);
         return ResponseEntity.ok(true);
     }
 
 
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestBody @Valid FeedLikeRequestDto feedLikeRequestDto) {
-        feedLikeService.delete(feedLikeRequestDto);
+        //feedLikeService.delete(feedLikeRequestDto);
         return ResponseEntity.ok(true);
     }
 
