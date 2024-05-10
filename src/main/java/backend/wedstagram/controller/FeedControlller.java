@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class FeedControlller {
 
     private final FeedService feedService;
-//    private final FeedLikeService feedLikeService;
+    private final FeedLikeService feedLikeService;
 
     //게시글 쓰기
     @PostMapping("/feed")

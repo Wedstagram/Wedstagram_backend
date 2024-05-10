@@ -34,15 +34,24 @@ public class Feed extends BaseEntity {
     @OneToMany(mappedBy = "feed",cascade = CascadeType.ALL)
     private List<FeedLike> likeList=new ArrayList<>();
 
-    private int likeCnt;
-
-    public int getLikeCount(){
-        return likeList.size();
-    }
+    private Long likeCount = 0L;
 
     public void update(FeedRequestDto feedRequestDto) {
         this.content= feedRequestDto.getContent();
         this.imageUrl= feedRequestDto.getImageUrl();
         //this.feedHashTagList=new ArrayList<>(); //문법이 맞는지?
     }
+
+    public void mappingFeedLike(FeedLike feedLike) {
+        this.likeList.add(feedLike);
+    }
+
+    public void updateLikeCount() {
+        this.likeCount=(long)this.likeList.size();
+    }
+    public void discountLike(FeedLike feedLike) {
+        this.likeList.remove(feedLike);
+    }
+
+
 }

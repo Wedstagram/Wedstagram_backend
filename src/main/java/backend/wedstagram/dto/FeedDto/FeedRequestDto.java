@@ -13,17 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedRequestDto {
-    private Long feedId;
 
+    private Long id;
     private String imageUrl;
     private String content;
-    private List<HashTagDto> hashTag;
+//    private List<HashTagDto> hashTag;
 
     public static Feed toFeed(FeedRequestDto feedRequestDto) {
         return Feed.builder()
-                .id(feedRequestDto.getFeedId())
+                .id(feedRequestDto.getId())
                 .content(feedRequestDto.getContent())
                 .imageUrl(feedRequestDto.getImageUrl())
+                .likeCnt(0)
                 //  .feedHashTagList(feedRequestDto.getHashTag())
                 .build();
     }
