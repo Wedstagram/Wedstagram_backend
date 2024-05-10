@@ -23,4 +23,16 @@ public class FeedLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="feed_id")
     private Feed feed;
+
+    public void mappingMember(Member member) {
+        this.member = member;
+        member.mappingFeedLike(this);
+    }
+
+    public void mappingFeed(Feed feed) {
+        this.feed = feed;
+        feed.mappingFeedLike(this);
+    }
+
+
 }

@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface FeedLikeRepository extends JpaRepository<FeedLike,Long> {
 
 
-    static Optional<Object> findByMemberAndFeed(Member member, Feed feed) {
-        return null;
-    }
+
+    Optional<FeedLike> findByFeedAndMember(Feed feed, Member member);
 }

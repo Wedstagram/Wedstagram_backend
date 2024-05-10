@@ -1,9 +1,10 @@
 package backend.wedstagram.controller;
 
+import backend.wedstagram.domain.Feed;
 import backend.wedstagram.dto.FeedDto.FeedRequestDto;
-import backend.wedstagram.service.FeedLikeService.FeedLikeService;
 import backend.wedstagram.service.FeedService.FeedService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class FeedControlller {
 
     private final FeedService feedService;
-    private final FeedLikeService feedLikeService;
 
     //게시글 쓰기
     @PostMapping("/feed")
     public ResponseEntity<Boolean> createFeed(@RequestBody FeedRequestDto feedRequestDto) {
         try{
-            feedService.saveFeed(feedRequestDto);
+            feedService.createFeed(feedRequestDto);
         }catch (Exception e){
             return ResponseEntity.ok(false);
         }
@@ -26,10 +26,10 @@ public class FeedControlller {
     }
 
     //게시글 수정
-    @PutMapping("/feed")
+    @PatchMapping("/feed")
     public ResponseEntity<Boolean> updateFeed(@RequestBody FeedRequestDto feedRequestDto) {
         try{
-            feedService.saveFeed(feedRequestDto);
+            feedService.updateFeed(feedRequestDto);
         }catch (Exception e){
             return ResponseEntity.ok(false);
         }
@@ -38,13 +38,18 @@ public class FeedControlller {
 
     //게시글 삭제
     @DeleteMapping("/feed")
-    public ResponseEntity<Boolean> deleteFeed(@RequestParam Long id) {
-        return ResponseEntity.ok(feedService.deleteFeed(id));
+    public ResponseEntity<String> deleteFeed(@RequestParam Long id) {
+        feedService.deleteFeed(id);
+        return ResponseEntity.status(HttpStatus.OK).body("게시글 삭제");
     }
 
     //게시글 좋아요
+    @PatchMapping("/feed/{id}/like")
+    public ResponseEntity<String> feedLike(@PathVariable(name="id") Long feedId,Long memberId) {
+        feedService.feedLike(feedId,memberId);
+        return ResponseEntity.status(HttpStatus.OK).body("좋아요");
+    }
 
-    //게시글 좋아요 취소
 
     //게시글 좋아요 목록 보기
 
