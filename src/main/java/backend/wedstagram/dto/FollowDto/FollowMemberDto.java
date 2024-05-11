@@ -9,11 +9,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FollowDto {
+public class FollowMemberDto {
 
     private Long id;
     private String userName;
     private String name;
     private String profileImage;
+
+    private Boolean isFollowing;
+
+    public void updateIsFollowing(Boolean isFollowing) {
+        this.isFollowing = isFollowing;
+    }
 
 }

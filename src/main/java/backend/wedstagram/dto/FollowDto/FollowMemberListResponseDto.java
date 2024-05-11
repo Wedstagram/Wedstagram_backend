@@ -11,6 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FollowResponseDto {
-    private List<FollowDto> followList;
+public class FollowMemberListResponseDto {
+    private List<FollowMemberDto> followList;
 }

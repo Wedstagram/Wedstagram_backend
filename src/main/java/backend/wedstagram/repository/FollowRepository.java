@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow,Long> {
-    Follow findByFollowerIdAndFollowingId(Long followerId, Long followingId);
+    Optional<Follow> findByFollowerIdAndFollowingId(Long followerId, Long followingId);
+
+    Boolean existsByFollowerIdAndFollowingId(Long followerId, Long followingId);
 
     List<Follow> findAllByFollowingId(Long followingId);
+
+    List<Follow> findAllByFollowerId(Long followerId);
 
     Follow deleteFollowByFollowerIdAndFollowingId(Long followerId, Long followingId);
 }

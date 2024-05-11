@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,7 @@ public class Member {
 
     private String password;
 
+    @Column(unique = true)
     private String userName;
 
     private String name;
@@ -27,10 +29,10 @@ public class Member {
     //S3 사용 예정
     private String imageUrl;
 
-    @OneToMany(mappedBy = "follower")
-    private List<Follow> followers;
-
     @OneToMany(mappedBy = "following")
-    private List<Follow> followings;
+    private List<Follow> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followings = new ArrayList<>();
 
 }
