@@ -24,7 +24,6 @@ public class FeedRequestDto {
                 .id(feedRequestDto.getId())
                 .content(feedRequestDto.getContent())
                 .imageUrl(feedRequestDto.getImageUrl())
-                .likeCnt(0)
                 //  .feedHashTagList(feedRequestDto.getHashTag())
                 .build();
     }

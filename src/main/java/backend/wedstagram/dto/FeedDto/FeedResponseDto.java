@@ -20,7 +20,7 @@ public class FeedResponseDto {
     private Long feedId;
     private String imageUrl;
     private String content;
-    private List<HashTagDto> hashTag;
+    //private List<HashTagDto> hashTag;
 
     public static Feed toFeed(FeedResponseDto feedResponseDto) {
         return Feed.builder()
