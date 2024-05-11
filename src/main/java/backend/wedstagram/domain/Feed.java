@@ -1,4 +1,5 @@
 package backend.wedstagram.domain;
+import backend.wedstagram.dto.FeedDto.FeedRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,11 @@ public class Feed extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 작성해도되나?!
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id")
+    private Member member;
+
     private String content;
 
     private String imageUrl;
@@ -27,4 +33,16 @@ public class Feed extends BaseEntity {
 
     @OneToMany(mappedBy = "feed",cascade = CascadeType.ALL)
     private List<FeedLike> likeList=new ArrayList<>();
+
+    private int likeCnt;
+
+    public int getLikeCount(){
+        return likeList.size();
+    }
+
+    public void update(FeedRequestDto feedRequestDto) {
+        this.content= feedRequestDto.getContent();
+        this.imageUrl= feedRequestDto.getImageUrl();
+        //this.feedHashTagList=new ArrayList<>(); //문법이 맞는지?
+    }
 }
