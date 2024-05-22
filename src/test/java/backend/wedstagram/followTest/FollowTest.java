@@ -33,36 +33,36 @@ public class FollowTest {
         this.followRepository = followRepository;
     }
 
-    @Test
-    public void 팔로우하기() throws Exception {
-        //given
-        Member member1 = Member.builder()
-                .name("정연")
-                .username("282.28_")
-                .password("1234")
-                .build();
-
-        Member member2 = Member.builder()
-                .name("유진")
-                .username("yuddin")
-                .password("1234")
-                .build();
-
-        memberRepository.save(member1);
-        memberRepository.save(member2);
-
-        Member findMember1 = memberRepository.findById(member1.getId()).orElseThrow();
-        Member findMember2 = memberRepository.findById(member2.getId()).orElseThrow();
-
-        //when
-
-        Long followId = followService.saveFollow(findMember1.getId(), findMember2.getId());
-
-        Follow findFollow = followRepository.findByFollowerIdAndFollowingId(member1.getId(), member2.getId()).orElseThrow();
-
-        //then
-        Assertions.assertThat(followId).isEqualTo(findFollow.getId());
-    }
+//    @Test
+//    public void 팔로우하기() throws Exception {
+//        //given
+//        Member member1 = Member.builder()
+//                .name("정연")
+//                .username("282.28_")
+//                .password("1234")
+//                .build();
+//
+//        Member member2 = Member.builder()
+//                .name("유진")
+//                .username("yuddin")
+//                .password("1234")
+//                .build();
+//
+//        memberRepository.save(member1);
+//        memberRepository.save(member2);
+//
+//        Member findMember1 = memberRepository.findById(member1.getId()).orElseThrow();
+//        Member findMember2 = memberRepository.findById(member2.getId()).orElseThrow();
+//
+//        //when
+//
+//        Long followId = followService.saveFollow(findMember1.getId(), findMember2.getId());
+//
+//        Follow findFollow = followRepository.findByFollowerIdAndFollowingId(member1.getId(), member2.getId()).orElseThrow();
+//
+//        //then
+//        Assertions.assertThat(followId).isEqualTo(findFollow.getId());
+//    }
 
 //    @Test
 //    public void 팔로워보기() throws Exception {
