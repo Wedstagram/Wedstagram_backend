@@ -42,7 +42,7 @@ public class FollowController {
     }
 
     // 팔로잉 보기, member가 searchUsername의 팔로잉 보기
-    @GetMapping("/{memberId}/followings/{searchUsername}")
+    @GetMapping("/followings/{searchUsername}")
     public ApiResponse<FollowMemberListResponseDto> getFollowings(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String searchUsername) {
 
         String username = customUserDetails.getUsername();
