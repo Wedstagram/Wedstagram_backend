@@ -25,22 +25,22 @@ public class FollowServiceImpl implements FollowService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Long saveFollow(Long memberId, Long receiverId) {
+    public Long saveFollow(String followerUsername, String recieveUsername) {
         //자기 자신을 팔로우한 경우
-        if(memberId.equals(receiverId)){
+        if(followerUsername.equals(recieveUsername)){
             throw new GeneralException(ErrorStatus.FOLLOW_SELF);
         }
 
         //이미 팔로우한 경우
-        Boolean exists = followRepository.existsByFollowerIdAndFollowingId(memberId, receiverId);
+        Boolean exists = followRepository.existsByFollowerUsernameAndFollowingUsername(followerUsername, recieveUsername);
         if(exists){
             throw new GeneralException(ErrorStatus.FOLLOW_ALREADY_EXIST);
         }
 
         //회원이 존재하지 않는 경우
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findByUsername(followerUsername)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
-        Member receiver = memberRepository.findById(receiverId)
+        Member receiver = memberRepository.findByUsername(recieveUsername)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
 
         Follow follow = FollowConverter.toFollow(member, receiver);
@@ -48,16 +48,16 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public void deleteFollow(Long followerId, Long followingId) {
+    public void deleteFollow(String followerUsername, String recieveUsername) {
         //자기 자신을 팔로우 삭제할 수 없다
-        if (followerId.equals(followingId)) {
+        if (followerUsername.equals(recieveUsername)) {
             throw new GeneralException(ErrorStatus.FOLLOW_SELF);
         }
 
 
-        Boolean exists = followRepository.existsByFollowerIdAndFollowingId(followerId, followingId);
+        Boolean exists = followRepository.existsByFollowerUsernameAndFollowingUsername(followerUsername, recieveUsername);
         if(exists) {
-            Follow follow = followRepository.findByFollowerIdAndFollowingId(followerId, followingId).orElseThrow();
+            Follow follow = followRepository.findByFollowerUsernameAndFollowingUsername(followerUsername, recieveUsername).orElseThrow();
             followRepository.delete(follow);
         }
         //팔로우 중이 아닌 경우
@@ -67,20 +67,20 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public void findFollowByFollowerAndFollowing(Long followerId, Long followingId) {
-        followRepository.findByFollowerIdAndFollowingId(followerId, followingId);
+    public void findFollowByFollowerAndFollowing(String followerUsername, String recieveUsername) {
+        followRepository.findByFollowerUsernameAndFollowingUsername(followerUsername, recieveUsername);
     }
 
     @Override
-    public FollowMemberListResponseDto getFollowers(Long memberId, Long searchMemberId) {
-        Member member = memberRepository.findById(searchMemberId).orElseThrow();
+    public FollowMemberListResponseDto getFollowers(String username, String searchUsername) {
+        Member member = memberRepository.findByUsername(searchUsername).orElseThrow();
         List<Follow> followers = member.getFollowers();
 
         List<FollowMemberDto> collectFollowMemberDto = followers.stream()
                 .map(Follow::getFollower)
                 .map((follower) -> {
                     FollowMemberDto followMemberDto = FollowConverter.toFollowMemberDto(follower);
-                    Boolean isFollowing = followRepository.existsByFollowerIdAndFollowingId(memberId, followMemberDto.getId());
+                    Boolean isFollowing = followRepository.existsByFollowerUsernameAndFollowingUsername(username, followMemberDto.getUserName());
                     followMemberDto.updateIsFollowing(isFollowing);
 
                     return followMemberDto;
@@ -93,15 +93,15 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public FollowMemberListResponseDto getFollowings(Long memberId, Long searchMemberId) {
-        Member member = memberRepository.findById(searchMemberId).orElseThrow();
+    public FollowMemberListResponseDto getFollowings(String username, String searchUsername) {
+        Member member = memberRepository.findByUsername(searchUsername).orElseThrow();
         List<Follow> followings = member.getFollowings();
 
         List<FollowMemberDto> collectFollowMemberDto = followings.stream()
                 .map(Follow::getFollowing)
                 .map((following) -> {
                     FollowMemberDto followMemberDto = FollowConverter.toFollowMemberDto(following);
-                    Boolean isFollowing = followRepository.existsByFollowerIdAndFollowingId(memberId, followMemberDto.getId());
+                    Boolean isFollowing = followRepository.existsByFollowerUsernameAndFollowingUsername(username, followMemberDto.getUserName());
                     followMemberDto.updateIsFollowing(isFollowing);
 
                     return followMemberDto;

@@ -1,8 +1,11 @@
 package backend.wedstagram.service.MemberService;
 
 import backend.wedstagram.domain.Member;
+import backend.wedstagram.dto.JoinDto;
 
 public interface MemberService {
 
-    Member getMemberById(Long memberId);
+    public Member getMemberById(Long memberId);
+
+    public void join(JoinDto joinDto);
 }

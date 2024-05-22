@@ -20,7 +20,7 @@ public class FollowConverter {
         return FollowMemberDto.builder()
                 .id(member.getId())
                 .name(member.getName())
-                .userName(member.getUserName())
+                .userName(member.getUsername())
                 .profileImage(member.getImageUrl())
                 .isFollowing(false)
                 .build();

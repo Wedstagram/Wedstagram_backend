@@ -38,13 +38,13 @@ public class FollowTest {
         //given
         Member member1 = Member.builder()
                 .name("정연")
-                .userName("282.28_")
+                .username("282.28_")
                 .password("1234")
                 .build();
 
         Member member2 = Member.builder()
                 .name("유진")
-                .userName("yuddin")
+                .username("yuddin")
                 .password("1234")
                 .build();
 
@@ -69,19 +69,19 @@ public class FollowTest {
 //        //given
 //        Member member1 = Member.builder()
 //                .name("정연")
-//                .userName("282.28_")
+//                .username("282.28_")
 //                .password("1234")
 //                .build();
 //
 //        Member member2 = Member.builder()
 //                .name("유진")
-//                .userName("yuddin")
+//                .username("yuddin")
 //                .password("1234")
 //                .build();
 //
 //        Member member3 = Member.builder()
 //                .name("석환")
-//                .userName("tjrghks")
+//                .username("tjrghks")
 //                .password("1234")
 //                .build();
 //
