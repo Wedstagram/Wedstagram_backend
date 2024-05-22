@@ -7,3 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  jwt:
+    secret: tpzbatpasdkbfqkdlakjsdkfasldfkjsfkasgnanwifk
+    expiration: 86400000 # 1 day
+    header: Authorization
+    prefix: Bearer
+    issuer: SecurityJWT
+    audience: SecurityJWT

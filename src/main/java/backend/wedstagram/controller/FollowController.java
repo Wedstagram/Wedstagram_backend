@@ -1,67 +1,62 @@
 package backend.wedstagram.controller;
 
-import backend.wedstagram.Converter.FollowConverter;
 import backend.wedstagram.apiPayload.ApiResponse;
-import backend.wedstagram.domain.Follow;
-import backend.wedstagram.domain.Member;
-import backend.wedstagram.dto.FollowDto.FollowMemberDto;
+import backend.wedstagram.dto.CustomUserDetails;
 import backend.wedstagram.dto.FollowDto.FollowMemberListResponseDto;
 import backend.wedstagram.service.FollowService.FollowService;
-import backend.wedstagram.service.MemberService.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
 public class FollowController {
 
     private final FollowService followService;
 
     // 팔로우하기
-    @PostMapping("/{memberId}/follow")
-    public ApiResponse<String> followUser(@PathVariable(value = "memberId") Long memberId, @RequestBody Long recieveMemberId) {
-
-        Long newFollow = followService.saveFollow(memberId, recieveMemberId);
+    @PostMapping("/follow/{recieveUsername}")
+    public ApiResponse<String> followUser(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String recieveUsername) {
+        String username = customUserDetails.getUsername();
+        Long newFollow = followService.saveFollow(username, recieveUsername);
         return ApiResponse.onSuccess("팔로우 완료");
     }
 
     // 언팔로우하기
-    @DeleteMapping("/{memberId}/unfollow")
-    public ApiResponse<String> unfollowUser(@PathVariable(value = "memberId") Long memberId, @RequestBody Long recieveMemberId) {
+    @DeleteMapping("/unfollow/{recieveMemberUsername}")
+    public ApiResponse<String> unfollowUser(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String recieveUsername) {
 
-        followService.deleteFollow(memberId, recieveMemberId);
+        String username = customUserDetails.getUsername();
+        followService.deleteFollow(username, recieveUsername);
         return ApiResponse.onSuccess("언팔로우 완료");
     }
 
-    // 팔로워 보기, memberId가 searchMemberId의 팔로워 보기
-    @GetMapping("/{memberId}/followers/{searchMemberId}")
-    public ApiResponse<FollowMemberListResponseDto> getFollowers(@PathVariable Long memberId, @PathVariable Long searchMemberId) {
+    // 팔로워 보기, member가 searchUsername의 팔로워 보기
+    @GetMapping("/followers/{searchUsername}")
+    public ApiResponse<FollowMemberListResponseDto> getFollowers(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String searchUsername) {
 
-        FollowMemberListResponseDto followers = followService.getFollowers(memberId, searchMemberId);
-
+        String username = customUserDetails.getUsername();
+        FollowMemberListResponseDto followers = followService.getFollowers(username, searchUsername);
 
         return ApiResponse.onSuccess(followers);
     }
 
-    // 팔로잉 보기, memberId가 searchMemberId의 팔로잉 보기
-    @GetMapping("/{memberId}/followings/{searchMemberId}")
-    public ApiResponse<FollowMemberListResponseDto> getFollowings(@PathVariable Long memberId, @PathVariable Long searchMemberId) {
+    // 팔로잉 보기, member가 searchUsername의 팔로잉 보기
+    @GetMapping("/{memberId}/followings/{searchUsername}")
+    public ApiResponse<FollowMemberListResponseDto> getFollowings(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String searchUsername) {
 
-        FollowMemberListResponseDto followings = followService.getFollowings(memberId, searchMemberId);
+        String username = customUserDetails.getUsername();
+        FollowMemberListResponseDto followings = followService.getFollowings(username, searchUsername);
 
         return ApiResponse.onSuccess(followings);
     }
 
     // 팔로워 삭제
-    @DeleteMapping("/{memberId}/followers")
-    public ApiResponse<String> deleteFollowers(@PathVariable(value = "memberId") Long memberId, @RequestBody Long recieveMemberId) {
+    @DeleteMapping("/followers/{recieveUsername}")
+    public ApiResponse<String> deleteFollowers(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String recieveUsername) {
 
-        followService.deleteFollow(recieveMemberId, memberId);
+        String username = customUserDetails.getUsername();
+        followService.deleteFollow(username, recieveUsername);
         return ApiResponse.onSuccess("팔로워 삭제 완료");
     }
 }

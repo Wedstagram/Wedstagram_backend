@@ -22,9 +22,11 @@ public class Member {
     private String password;
 
     @Column(unique = true)
-    private String userName;
+    private String username;
 
     private String name;
+
+    private String role;
 
     //S3 사용 예정
     private String imageUrl;

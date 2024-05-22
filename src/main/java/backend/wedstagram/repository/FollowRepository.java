@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow,Long> {
-    Optional<Follow> findByFollowerIdAndFollowingId(Long followerId, Long followingId);
+    Optional<Follow> findByFollowerUsernameAndFollowingUsername(String followerUsername, String followingUsername);
 
-    Boolean existsByFollowerIdAndFollowingId(Long followerId, Long followingId);
+    Boolean existsByFollowerUsernameAndFollowingUsername(String followerUsername, String followingUsername);
 
     List<Follow> findAllByFollowingId(Long followingId);
 

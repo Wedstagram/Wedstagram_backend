@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface FollowService {
 
-    public Long saveFollow(Long memberId, Long receiverId);
-    public void deleteFollow(Long followerMemberId, Long followingMemberId);
-    public void findFollowByFollowerAndFollowing(Long followerMemberId, Long followingMemberId);
-    public FollowMemberListResponseDto getFollowers(Long memberId, Long searchMemberId);
-    public FollowMemberListResponseDto getFollowings(Long memberId, Long searchMemberId);
+    public Long saveFollow(String username, String recieveMemberUsername);
+    public void deleteFollow(String followerUsername, String recieveUsername);
+    public void findFollowByFollowerAndFollowing(String followerUsername, String recieveUsername);
+    public FollowMemberListResponseDto getFollowers(String username, String searchUsername);
+    public FollowMemberListResponseDto getFollowings(String username, String searchUsername);
 
 }
