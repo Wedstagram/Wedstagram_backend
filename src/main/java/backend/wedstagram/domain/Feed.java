@@ -36,6 +36,11 @@ public class Feed extends BaseEntity {
 
     private Long likeCount = 0L;
 
+    // Member 설정 메서드
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     public void update(FeedRequestDto feedRequestDto) {
         this.content= feedRequestDto.getContent();
         this.imageUrl= feedRequestDto.getImageUrl();

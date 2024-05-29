@@ -22,8 +22,11 @@ public enum ErrorStatus implements BaseCode {
     // Follow Error
     FOLLOW_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "FOLLOW4001", "이미 팔로우 중입니다."),
     FOLLOW_NOT_FOUND(HttpStatus.BAD_REQUEST, "FOLLOW4002", "팔로우 중이 아닙니다."),
-    FOLLOW_SELF(HttpStatus.BAD_REQUEST, "FOLLOW4003", "자기 자신을 팔로우하거나 취소할 수 없습니다.");
+    FOLLOW_SELF(HttpStatus.BAD_REQUEST, "FOLLOW4003", "자기 자신을 팔로우하거나 취소할 수 없습니다."),
 
+    // Feed Error
+    FEED_NOT_FOUND(HttpStatus.BAD_REQUEST, "FEED4001", "게시글을 찾을 수 없습니다."),
+    FEED_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "FEED4011", "게시글에 대한 권한이 없습니다.");
 
     // Follow Error
     private final HttpStatus httpStatus;

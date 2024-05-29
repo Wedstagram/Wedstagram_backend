@@ -1,5 +1,7 @@
 package backend.wedstagram.service.FeedService;
 
+import backend.wedstagram.apiPayload.code.status.ErrorStatus;
+import backend.wedstagram.apiPayload.exception.GeneralException;
 import backend.wedstagram.domain.Feed;
 import backend.wedstagram.domain.FeedLike;
 import backend.wedstagram.domain.Member;
@@ -26,26 +28,42 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public void createFeed(FeedRequestDto feedRequestDto){
-        feedRepository.save(FeedRequestDto.toFeed(feedRequestDto));
+    public void createFeed(String username,FeedRequestDto feedRequestDto){
+
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+        Feed feed = FeedRequestDto.toFeed(feedRequestDto);
+        feed.setMember(member);
+        feedRepository.save(feed);
         //cnt++;
     }
 
-    public void deleteFeed(Long id){
+    public void deleteFeed(String username,Long id){
+
+        Feed feed = feedRepository.findById(id)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.FEED_NOT_FOUND));
+        if (!feed.getMember().getUsername().equals(username)) {
+            throw new GeneralException(ErrorStatus.FEED_UNAUTHORIZED);
+        }
         feedRepository.deleteById(id);
     }
 
-    public FeedRequestDto updateFeed(FeedRequestDto feedRequestDto){
-
-        Feed feed = feedRepository.findById(feedRequestDto.getId()).orElseThrow(RuntimeException::new);
+    @Override
+    public void updateFeed(String username, FeedRequestDto feedRequestDto) {
+        Feed feed = feedRepository.findById(feedRequestDto.getId())
+                .orElseThrow(() -> new GeneralException(ErrorStatus.FEED_NOT_FOUND));
+        if (!feed.getMember().getUsername().equals(username)) {
+            throw new GeneralException(ErrorStatus.FEED_UNAUTHORIZED);
+        }
         feed.update(feedRequestDto);
+        feedRepository.save(feed);
+    }
 
-        return feedRequestDto;
-    };
-
-    public void feedLike(Long feedId,Long memberId){
-        Feed feed = feedRepository.findById(feedId).orElseThrow(RuntimeException::new);
-        Member member=memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+    public void feedLike(String username,Long feedId,Long memberId){
+        Feed feed = feedRepository.findById(feedId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.FEED_NOT_FOUND));
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
 
         Optional<FeedLike> byFeedAndMember=feedLikeRepository.findByFeedAndMember(feed,member);
 
