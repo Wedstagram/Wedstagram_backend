@@ -1,13 +1,13 @@
 package backend.wedstagram.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,11 +21,20 @@ public class Member {
 
     private String password;
 
-    private String userName;
+    @Column(unique = true)
+    private String username;
 
     private String name;
 
+    private String role;
+
     //S3 사용 예정
     private String imageUrl;
+
+    @OneToMany(mappedBy = "following")
+    private List<Follow> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followings = new ArrayList<>();
 
 }

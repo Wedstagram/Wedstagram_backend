@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FeedResponseDto {
     private List<FeedRequestDto> Name;
-    private List<FeedRequestDto> username;
+    private List<FeedRequestDto> userName;
     private List<FeedRequestDto> profile;
 
     private Long feedId;
