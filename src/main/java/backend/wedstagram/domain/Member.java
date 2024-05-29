@@ -1,5 +1,6 @@
 package backend.wedstagram.domain;
 
+import backend.wedstagram.dto.FeedDto.FeedRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,5 +37,12 @@ public class Member {
 
     @OneToMany(mappedBy = "follower")
     private List<Follow> followings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    private List<FeedLike> likeList=new ArrayList<>();
+
+    public void mappingFeedLike(FeedLike feedLike) {
+        this.likeList.add(feedLike);
+    }
 
 }

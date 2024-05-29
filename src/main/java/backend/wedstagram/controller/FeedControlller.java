@@ -56,4 +56,4 @@ public class FeedControlller {
 
     //게시글 저장 취소
 
-}}
+}
