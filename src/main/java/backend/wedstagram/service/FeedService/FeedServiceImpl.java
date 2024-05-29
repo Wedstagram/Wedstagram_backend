@@ -59,6 +59,7 @@ public class FeedServiceImpl implements FeedService {
         feedRepository.save(feed);
     }
 
+
     public void feedLike(String username,Long feedId,Long memberId){
         Feed feed = feedRepository.findById(feedId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.FEED_NOT_FOUND));

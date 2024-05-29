@@ -2,6 +2,7 @@ package backend.wedstagram.controller;
 
 import backend.wedstagram.apiPayload.ApiResponse;
 import backend.wedstagram.dto.CustomUserDetails;
+import backend.wedstagram.domain.Feed;
 import backend.wedstagram.dto.FeedDto.FeedRequestDto;
 import backend.wedstagram.service.FeedService.FeedService;
 import lombok.RequiredArgsConstructor;

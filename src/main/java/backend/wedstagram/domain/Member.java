@@ -2,6 +2,7 @@ package backend.wedstagram.domain;
 
 import backend.wedstagram.dto.FeedDto.FeedRequestDto;
 import jakarta.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
